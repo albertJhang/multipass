@@ -82,9 +82,11 @@ apps:
       - network
   gui:
     environment: *client-environment
+    extensions: [ gnome ]
     command: bin/launch-multipass-gui
     desktop: usr/share/applications/multipass.gui.desktop
     autostart: multipass.gui.autostart.desktop
+    command-chain: [bin/set-xdg-data-home]
     plugs:
       - home
       - network
@@ -98,7 +100,7 @@ apps:
       XDG_DATA_HOME: $SNAP_USER_DATA
       XDG_DATA_DIRS: $SNAP/usr/share
       GDK_GL: gles
-    command: bin/desktop_gui_bundle/desktop_gui
+    command: bin/desktop_gui
     plugs:
       - desktop
       - desktop-legacy
@@ -152,6 +154,7 @@ parts:
     - libxml2
     - dnsmasq-base
     - dnsmasq-utils
+    - qtwayland5
     source: .
     cmake-parameters:
     - -DCMAKE_BUILD_TYPE=Release
@@ -325,4 +328,4 @@ parts:
     flutter-channel: stable
     flutter-target: lib/main.dart
     organize:
-      /root/parts/desktop-gui/build/build/linux/x64/release/bundle: bin/desktop_gui_bundle
+      /root/parts/desktop-gui/build/build/linux/x64/release/bundle: bin/
